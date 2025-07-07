@@ -45,11 +45,8 @@ app.get("/numbers", async (req, res) => {
   res.json(rows);
 });
 
-// Lanzar servidor en puerto 3001
-app.listen(3001, async () => {
-  const db = await dbPromise;
-  await db.run(
-    "CREATE TABLE IF NOT EXISTS participants (id INTEGER PRIMARY KEY, name TEXT, surname TEXT, phone TEXT, number INTEGER UNIQUE)"
-  );
-  console.log("Servidor escuchando en http://localhost:3001");
+// Lanzar servidor en Port para que render lo publique
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Servidor corriendo en el puerto ${PORT}`);
 });
