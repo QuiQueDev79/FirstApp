@@ -5,7 +5,8 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "build": "npm install"
+    "build": "npm install",
+    "clean-install": "rm -rf node_modules package-lock.json && npm install"
   },
   "keywords": [],
   "author": "",
