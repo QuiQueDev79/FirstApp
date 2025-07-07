@@ -9,6 +9,7 @@ function App() {
   const [takenNumbers, setTakenNumbers] = useState([]);
 
   useEffect(() => {
+    console.log("API_URL:", import.meta.env.VITE_API_URL);
     axios.get(`${import.meta.env.VITE_API_URL}/numbers`).then((res) => {
       setTakenNumbers(res.data.map((n) => n.number));
     });
