@@ -9,8 +9,9 @@ function App() {
   const [takenNumbers, setTakenNumbers] = useState([]);
 
   useEffect(() => {
-    console.log("API_URL:", import.meta.env.VITE_API_URL);
-    axios.get(`${import.meta.env.VITE_API_URL}/numbers`).then((res) => {
+    console.log("API_URL:", process.env.REACT_APP_API_URL);
+    axios.get(`${process.env.REACT_APP_API_URL}/numbers`)
+.then((res) => {
       setTakenNumbers(res.data.map((n) => n.number));
     });
   }, []);
@@ -22,7 +23,7 @@ function App() {
       return;
     }
     try {
-      await axios.post(`${import.meta.env.VITE_API_URL}/reserve`, {
+      await axios.post(`${process.env.REACT_APP_API_URL}/reserve`, {
         name,
         surname,
         phone,
