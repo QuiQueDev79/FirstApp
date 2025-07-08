@@ -1,3 +1,9 @@
+import dotenv from 'dotenv';
+dotenv.config();
+
+import twilio from 'twilio';
+const client = twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
+
 import express from "express";
 import sqlite3 from "sqlite3";
 import { open } from "sqlite";
@@ -25,12 +31,13 @@ app.post("/reserve", async (req, res) => {
       [name, surname, phone, number]
     );
 
-    // Llamada a CallMeBot (ajusta tu API key)
-    await axios.get(
-      `https://api.callmebot.com/whatsapp.php?phone=${phone}&text=${encodeURIComponent(
-        `Felicidades. Ya estás participando en el sorteo a beneficio del Tío Ramón Araujo. Tu número es el ${number}`
-      )}&apikey=YOUR_CALLMEBOT_API_KEY`
-    );
+    // Llamada a Twilio
+    await client.messages.create({
+  from: process.env.TWILIO_WHATSAPP_NUMBER,
+  to: `whatsapp:${phone}`,  // asegúrate de que esté en formato internacional, ej: +34600000000
+  body: `Hola ${name}, ya estás participando en el sorteo a beneficio del Tío Ramón Araujo con el número ${number}. ¡Gracias por colaborar!`
+});
+
 
     res.status(200).json({ message: "Número reservado correctamente" });
   } catch (err) {
